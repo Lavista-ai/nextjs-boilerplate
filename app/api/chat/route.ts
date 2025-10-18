@@ -1,4 +1,4 @@
-// test push import { NextResponse } from "next/server";
+import { NextResponse } from "next/server";
 
 export async function POST(req: Request) {
   try {
@@ -24,6 +24,9 @@ export async function POST(req: Request) {
     });
   } catch (err) {
     console.error(err);
-    return NextResponse.json({ error: "Erreur interne" }, { status: 500 });
+    return new Response(JSON.stringify({ error: "Erreur interne" }), {
+      status: 500,
+      headers: { "Content-Type": "application/json" },
+    });
   }
 }

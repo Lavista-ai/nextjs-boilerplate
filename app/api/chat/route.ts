@@ -1,6 +1,13 @@
 import { NextResponse } from "next/server";
 
-export async function POST(req: Request) {
+export async function POST(req: Request) {// Vérifie la clé de sécurité ZenIA
+const key = req.headers.get("x-zen-key") || "";
+if (key !== process.env.ZEN_SERVER_TOKEN) {
+  return new Response(JSON.stringify({ error: "Unauthorized" }), {
+    status: 401,
+    headers: { "Content-Type": "application/json" },
+  });
+}
   try {
     const body = await req.json();
 
